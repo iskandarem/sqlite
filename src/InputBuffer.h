@@ -4,24 +4,23 @@
 #include<iostream>
 #include<memory>
 
+
 class InputBuffer
 {
 private:
-    std::string* buffer;
-    ssize_t input_length;
+    std::string* buffer; // Pointer to buffer holding input string
 public:
     InputBuffer()
-        :buffer(new std::string()), input_length(0){}
+        :buffer(new std::string()) {}
 
     std::string* get_buffer();
 
-    ssize_t get_input_length();
 
     void read_input();
 
     ~InputBuffer()
     {
-        delete buffer; // deleting string 
+        delete buffer; // Releases buffer memory 
     }
         
 };
@@ -29,11 +28,6 @@ public:
 inline std::string* InputBuffer::get_buffer()
 {
     return this->buffer;
-}
-
-inline ssize_t InputBuffer::get_input_length()
-{
-    return this->input_length;
 }
 
 inline void InputBuffer::read_input()
