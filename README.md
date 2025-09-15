@@ -1,2 +1,8 @@
 # sqlite
-Implementation of sqlite in cpp
+Implementation of sqlite in `C++`
+
+
+## Contributors
+<!-- readme: contributors -start -->
+
+<!-- readme: contributors -end -->
