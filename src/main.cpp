@@ -1,5 +1,5 @@
 #include<iostream>
-#include "InputBuffer.h"
+#include "InputBuffer.hpp"
 
 void print_prompt()
 {
