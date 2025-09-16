@@ -1,5 +1,6 @@
 #include<iostream>
 #include "InputBuffer.hpp"
+#include "Statement.hpp"
 
 void print_prompt()
 {
@@ -14,15 +15,27 @@ int main(int argc, char* argv[])
         print_prompt();
         input_buffer->read_input();
 
-        if((*input_buffer->get_buffer()).compare(".exit") == 0)
+        if ((*input_buffer->get_buffer())[0] == '.')
         {
-            delete input_buffer; //close input buffer 
-            exit(EXIT_SUCCESS); //exit with success
+            switch (input_buffer->do_meta_command())
+            {
+            case META_COMMAND_SUCCESS:
+                continue;
+            case META_COMMAND_UNRECOGNIZED_COMMAND:
+                std::cout << "Unrecognized command '" << *input_buffer->get_buffer() << "'" << std::endl;
+                continue;
+            }
         }
-        else
+        Statement statement;
+        switch (input_buffer->prepare_statement(&statement))
         {
-            std::cout << "Unrecognized command '" << *input_buffer->get_buffer() << "'." << std::endl;
+        case PREPARE_SUCCESS:
+            break;
+        case PREPARE_UNRECOGNIZED_STATEMENT:
+            std::cout << "Unrecognized keyword at start of '" << *input_buffer->get_buffer() << "'." << std::endl;
+            continue;
         }
+        statement.execute_statement();
+        std::cout << "Executed." << std::endl;
     }
-    
 }

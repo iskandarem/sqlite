@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include "Statement.hpp"
+#include "Enums.hpp"
+
 class InputBuffer
 {
 private:
@@ -11,6 +14,10 @@ public:
 
 
     void read_input();
+
+    MetaCommandResult do_meta_command();
+
+    PrepareResult prepare_statement(Statement* statement);
 
     ~InputBuffer();   
 };

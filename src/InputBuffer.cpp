@@ -21,6 +21,34 @@ void InputBuffer::read_input()
     trim_whitespace(*buffer);
 }
 
+MetaCommandResult InputBuffer::do_meta_command()
+{
+    if (*buffer == ".exit")
+    {
+        exit(EXIT_SUCCESS);
+    }
+    else
+    {
+        return META_COMMAND_UNRECOGNIZED_COMMAND;
+    }
+}
+
+PrepareResult InputBuffer::prepare_statement(Statement *statement)
+{
+    std::string temp = buffer->substr(0, 6);
+    if (temp == "insert")
+    {
+        statement->type = STATEMENT_INSERT;
+        return PREPARE_SUCCESS;
+    }
+    if (*buffer == "select")
+    {
+        statement->type = STATEMENT_SELECT;
+        return PREPARE_SUCCESS;
+    }
+    return PREPARE_UNRECOGNIZED_STATEMENT;
+}
+
 InputBuffer::~InputBuffer()
 {
     delete buffer; // Releases buffer memory
