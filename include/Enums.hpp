@@ -1,22 +1,27 @@
 #pragma once
 
-typedef enum
+enum MetaCommandResult
 {
     META_COMMAND_SUCCESS,
     META_COMMAND_UNRECOGNIZED_COMMAND
-}MetaCommandResult;
+};
 
-typedef enum 
+enum PrepareResult 
 {
     PREPARE_SUCCESS,
+    PREPARE_SYNTAX_ERROR,
     PREPARE_UNRECOGNIZED_STATEMENT
-}PrepareResult;
+};
 
-typedef enum
+enum StatementType
 {
     STATEMENT_INSERT,
     STATEMENT_SELECT    
-}StatementType;
+};
 
-
+enum ExecuteResult
+{
+    EXECUTE_SUCCESS,
+    EXECUTE_TABLE_FULL 
+};
 

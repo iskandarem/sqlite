@@ -1,6 +1,7 @@
 #include "InputBuffer.hpp"
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 InputBuffer::InputBuffer()
     :buffer(new std::string()) {}
@@ -35,10 +36,15 @@ MetaCommandResult InputBuffer::do_meta_command()
 
 PrepareResult InputBuffer::prepare_statement(Statement *statement)
 {
-    std::string temp = buffer->substr(0, 6);
-    if (temp == "insert")
+    // std::string temp = buffer->substr(0, 6);
+    std::istringstream iss(*this->buffer);
+    std::string keyword;
+    iss >> keyword;
+    if (keyword == "insert")
     {
         statement->type = STATEMENT_INSERT;
+        if(!(iss >> (statement->row_to_insert.id) >> statement->row_to_insert.username >> statement->row_to_insert.email))
+            return PREPARE_SYNTAX_ERROR;
         return PREPARE_SUCCESS;
     }
     if (*buffer == "select")

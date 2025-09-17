@@ -10,6 +10,7 @@ void print_prompt()
 int main(int argc, char* argv[])
 {
     InputBuffer* input_buffer = new InputBuffer();
+    Table* table = new Table();
     while (true)
     {
         print_prompt();
@@ -31,11 +32,21 @@ int main(int argc, char* argv[])
         {
         case PREPARE_SUCCESS:
             break;
+        case PREPARE_SYNTAX_ERROR:
+            std::cout << "Syntax error. Could not parse statement." << std::endl;
+            continue;
         case PREPARE_UNRECOGNIZED_STATEMENT:
             std::cout << "Unrecognized keyword at start of '" << *input_buffer->get_buffer() << "'." << std::endl;
             continue;
         }
-        statement.execute_statement();
-        std::cout << "Executed." << std::endl;
+        switch (statement.execute_statement(table))
+        {
+        case EXECUTE_SUCCESS:
+            std::cout << "Executed." << std::endl; 
+            break;
+        case EXECUTE_TABLE_FULL:
+            std::cout << "Error: Table full." << std::endl;
+            break;
+        }
     }
 }
