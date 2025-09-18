@@ -11,6 +11,17 @@ std::string* InputBuffer::get_buffer()
     return this->buffer;
 }
 
+void InputBuffer::set_buffer(std::string input)
+{
+    if(input.empty())
+    {
+        std::cout << "Cannot assign '" << input << "' to buffer." << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    *buffer = input;
+    trim_whitespace(*buffer);
+}
+
 void InputBuffer::read_input()
 {
     std::getline(std::cin, *buffer);

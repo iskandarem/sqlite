@@ -12,6 +12,7 @@ public:
 
     std::string* get_buffer();
 
+    void set_buffer(std::string input);
 
     void read_input();
 
