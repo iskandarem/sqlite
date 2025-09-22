@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     while (true)
     {
         print_prompt();
-        input_buffer->read_input();
+        if(!input_buffer->read_input()) continue;
 
         if ((*input_buffer->get_buffer())[0] == '.')
         {

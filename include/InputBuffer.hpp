@@ -12,9 +12,9 @@ public:
 
     std::string* get_buffer();
 
-    void set_buffer(std::string input);
+    bool set_buffer(std::string input);
 
-    void read_input();
+    bool read_input();
 
     MetaCommandResult do_meta_command();
 

@@ -43,6 +43,27 @@ TEST(MaxAttributeSizeTest, BasicAssertions)
     // So our page can contain only 13 rows maximum now.
 }
 
+//test enter type 
+TEST(EnerTypeTest, BasicAssertions)
+{
+    std::string enter = "\n";
+    InputBuffer* input_buffer = new InputBuffer();
+    EXPECT_FALSE(input_buffer->set_buffer(enter));
+}
+TEST(EmptyStringTest, BasicAssertions)
+{
+    std:: string empty_s;
+    InputBuffer* input_buffer = new InputBuffer();
+    EXPECT_FALSE(input_buffer->set_buffer(empty_s));
+}
+
+TEST(NotCorrectFormatedStringTest, BasicAssertions)
+{
+    std::string s = "\n\t                                     \r";
+    InputBuffer* input_buffer = new InputBuffer();
+    EXPECT_FALSE(input_buffer->set_buffer(s));
+}
+
 
 int main(int argc, char **argv)
 {

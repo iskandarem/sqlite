@@ -11,26 +11,30 @@ std::string* InputBuffer::get_buffer()
     return this->buffer;
 }
 
-void InputBuffer::set_buffer(std::string input)
+bool InputBuffer::set_buffer(std::string input)
 {
+    trim_whitespace(input);
     if(input.empty())
     {
         std::cout << "Cannot assign '" << input << "' to buffer." << std::endl;
-        exit(EXIT_FAILURE);
+        // exit(EXIT_FAILURE);
+        return false;
     }
     *buffer = input;
-    trim_whitespace(*buffer);
+    return true;
 }
 
-void InputBuffer::read_input()
+bool InputBuffer::read_input()
 {
     std::getline(std::cin, *buffer);
     if(buffer->empty())
     {
         std::cout << "Error reading input" << std::endl;
-        exit(EXIT_FAILURE);
+        // exit(EXIT_FAILURE);
+        return false;
     }
     trim_whitespace(*buffer);
+    return set_buffer(*buffer);
 }
 
 MetaCommandResult InputBuffer::do_meta_command()
