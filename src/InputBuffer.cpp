@@ -58,8 +58,18 @@ PrepareResult InputBuffer::prepare_statement(Statement *statement)
     if (keyword == "insert")
     {
         statement->type = STATEMENT_INSERT;
-        if(!(iss >> (statement->row_to_insert.id) >> statement->row_to_insert.username >> statement->row_to_insert.email))
+        int id;
+        std::string username;
+        std::string email;
+        if(!(iss >> id >> username >> email))
             return PREPARE_SYNTAX_ERROR;
+        
+        statement->row_to_insert.set_id(id);
+        if(!(statement->row_to_insert.set_username(username) && statement->row_to_insert.set_email(email)))
+        {
+            return PREPARE_STRING_TOO_LONG;
+        }
+        
         return PREPARE_SUCCESS;
     }
     if (*buffer == "select")

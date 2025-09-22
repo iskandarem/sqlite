@@ -39,8 +39,18 @@ TEST(MaxAttributeSizeTest, BasicAssertions)
     Table* table = new Table();
     input_buffer->prepare_statement(&statement);
     statement.execute_insert(table);
-    // statement.execute_select(table); it wasn't right so need to increase the size of our arrays by one in row.hpp which i did. 
+    // statement.execute_select(table); // it wasn't right so need to increase the size of our arrays by one in row.hpp which i did. 
     // So our page can contain only 13 rows maximum now.
+}
+TEST(TooLongStringTest, BasicAssertions)
+{
+    std::string username(33, 'A');
+    std::string email(256, 'B');
+    InputBuffer* input_buffer = new InputBuffer();
+    input_buffer->set_buffer("insert 1 " + username + " " + email);
+    Statement statement;
+    Table* table = new Table();
+    EXPECT_EQ(input_buffer->prepare_statement(&statement), PREPARE_STRING_TOO_LONG);
 }
 
 //test enter type 
