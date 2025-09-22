@@ -9,25 +9,40 @@ TEST(DoMetaCommandTest, BasicAssertions)
 }
 
 
-TEST(InsertionTest, BasicAssertions)
+TEST(BasicInsertionTest, BasicAssertions)
 {
     InputBuffer* input_buffer = new InputBuffer();
     Statement statement;
     Table* table = new Table();
-    for(int i=0; i<1399; ++i)
+    for(int i=0; i<1299; ++i)
     {
         std::string s = std::to_string(i);
         input_buffer->set_buffer("insert " + s + " person" + s + " email.person" + s + "@gmail.com");
         input_buffer->prepare_statement(&statement);
         statement.execute_insert(table);
     }
-    input_buffer->set_buffer("insert 1399 person1399 email.person1399@gmail.com");
+    input_buffer->set_buffer("insert 1299 person1299 email.person1299@gmail.com");
     input_buffer->prepare_statement(&statement);
     EXPECT_NE(statement.execute_insert(table), EXECUTE_TABLE_FULL);
-    input_buffer->set_buffer("insert 1400 person1400 email.person1400@gmail.com");
+    input_buffer->set_buffer("insert 1300 person1300 email.person1300@gmail.com");
     input_buffer->prepare_statement(&statement);
     EXPECT_EQ(statement.execute_insert(table), EXECUTE_TABLE_FULL);
 }
+
+TEST(MaxAttributeSizeTest, BasicAssertions)
+{
+    std::string username(32, 'A');
+    std::string email(255, 'M');
+    InputBuffer* input_buffer = new InputBuffer();
+    input_buffer->set_buffer("insert 1 " + username + " " + email);
+    Statement statement;
+    Table* table = new Table();
+    input_buffer->prepare_statement(&statement);
+    statement.execute_insert(table);
+    // statement.execute_select(table); it wasn't right so need to increase the size of our arrays by one in row.hpp which i did. 
+    // So our page can contain only 13 rows maximum now.
+}
+
 
 int main(int argc, char **argv)
 {
