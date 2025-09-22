@@ -1,9 +1,11 @@
 #include "Row.hpp"
 #include <cstring>
 
-void Row::set_id(int _id)
+bool Row::set_id(int _id)
 {
+    if(_id<=0) return false;
     this->id = _id;
+    return true;
 }
 
 bool Row::set_username(std::string _username)

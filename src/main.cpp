@@ -32,6 +32,9 @@ int main(int argc, char* argv[])
         {
         case PREPARE_SUCCESS:
             break;
+        case PREPARE_NEGATIVE_ID:
+            std::cout << "id cannot be 0 or negative.\n";
+            continue;
         case PREPARE_STRING_TOO_LONG:
             std::cout << "Username or email is/are too long.\n Valid parameters:\n\tusername: " << COLUMN_USERNAME_SIZE << std::endl << "\temail: " << COLUMN_EMAIL_SIZE << std::endl;
             continue;

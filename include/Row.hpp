@@ -16,7 +16,7 @@ private:
     char email[COLUMN_EMAIL_SIZE+1];
 public:
     Row() = default;
-    void set_id(int _id);
+    bool set_id(int _id);
     bool set_username(std::string _username);
     bool set_email(std::string _email);
     int get_id();
