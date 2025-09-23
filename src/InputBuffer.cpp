@@ -61,15 +61,11 @@ PrepareResult InputBuffer::prepare_statement(Statement *statement)
         int id;
         std::string username;
         std::string email;
-        if(!(iss >> id >> username >> email))
-            return PREPARE_SYNTAX_ERROR;
+        if(!(iss >> id >> username >> email)) return PREPARE_SYNTAX_ERROR;
         
-        if(!statement->row_to_insert.set_id(id))
-            return PREPARE_NEGATIVE_ID;
-        if(!(statement->row_to_insert.set_username(username) && statement->row_to_insert.set_email(email)))
-        {
-            return PREPARE_STRING_TOO_LONG;
-        }
+        if(!statement->row_to_insert.set_id(id)) return PREPARE_NEGATIVE_ID;
+
+        if(!(statement->row_to_insert.set_username(username) && statement->row_to_insert.set_email(email))) return PREPARE_STRING_TOO_LONG;
         
         return PREPARE_SUCCESS;
     }

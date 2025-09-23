@@ -13,6 +13,7 @@ bool Row::set_username(std::string _username)
     if(_username.length()>COLUMN_USERNAME_SIZE) return false;
     for(int i=0; i<_username.length(); ++i)
         this->username[i] = _username[i];
+    this->username[_username.length()] = '\0';
     return true;
 }
 
@@ -25,6 +26,7 @@ bool Row::set_email(std::string _email)
     {
         email[i] = _email[i];
     }
+    this->email[_email.length()] = '\0';
     return true;
 }
 
