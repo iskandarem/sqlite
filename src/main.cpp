@@ -9,8 +9,9 @@ void print_prompt()
 
 int main(int argc, char* argv[])
 {
+    std::string filename = "test.db";
     InputBuffer* input_buffer = new InputBuffer();
-    Table* table = new Table();
+    Table* table = new Table(filename);
     while (true)
     {
         print_prompt();
@@ -18,7 +19,7 @@ int main(int argc, char* argv[])
 
         if ((*input_buffer->get_buffer())[0] == '.')
         {
-            switch (input_buffer->do_meta_command())
+            switch (input_buffer->do_meta_command(table))
             {
             case META_COMMAND_SUCCESS:
                 continue;

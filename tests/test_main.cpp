@@ -1,11 +1,14 @@
 #include <gtest/gtest.h>
 #include <InputBuffer.hpp>
 
+std::string filename = "test.db";
+
 TEST(DoMetaCommandTest, BasicAssertions)
 {
+    Table* table = new Table(filename);
     InputBuffer* input_buffer = new InputBuffer();
     input_buffer->set_buffer("exit");
-    EXPECT_EQ(input_buffer->do_meta_command(), META_COMMAND_UNRECOGNIZED_COMMAND);
+    EXPECT_EQ(input_buffer->do_meta_command(table), META_COMMAND_UNRECOGNIZED_COMMAND);
 }
 
 
@@ -13,7 +16,8 @@ TEST(BasicInsertionTest, BasicAssertions)
 {
     InputBuffer* input_buffer = new InputBuffer();
     Statement statement;
-    Table* table = new Table();
+    
+    Table* table = new Table(filename);
     for(int i=0; i<1299; ++i)
     {
         std::string s = std::to_string(i);
@@ -36,7 +40,7 @@ TEST(MaxAttributeSizeTest, BasicAssertions)
     InputBuffer* input_buffer = new InputBuffer();
     input_buffer->set_buffer("insert 1 " + username + " " + email);
     Statement statement;
-    Table* table = new Table();
+    Table* table = new Table(filename);
     input_buffer->prepare_statement(&statement);
     statement.execute_insert(table);
     // statement.execute_select(table); // it wasn't right so need to increase the size of our arrays by one in row.hpp which i did. 
@@ -49,7 +53,7 @@ TEST(TooLongStringTest, BasicAssertions)
     InputBuffer* input_buffer = new InputBuffer();
     input_buffer->set_buffer("insert 1 " + username + " " + email);
     Statement statement;
-    Table* table = new Table();
+    Table* table = new Table(filename);
     EXPECT_EQ(input_buffer->prepare_statement(&statement), PREPARE_STRING_TOO_LONG);
 }
 

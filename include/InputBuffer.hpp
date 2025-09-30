@@ -16,7 +16,7 @@ public:
 
     bool read_input();
 
-    MetaCommandResult do_meta_command();
+    MetaCommandResult do_meta_command(Table* table);
 
     PrepareResult prepare_statement(Statement* statement);
 

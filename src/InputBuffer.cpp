@@ -37,10 +37,11 @@ bool InputBuffer::read_input()
     return set_buffer(*buffer);
 }
 
-MetaCommandResult InputBuffer::do_meta_command()
+MetaCommandResult InputBuffer::do_meta_command(Table* table)
 {
     if (*buffer == ".exit")
     {
+        delete table;
         exit(EXIT_SUCCESS);
     }
     else

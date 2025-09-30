@@ -33,8 +33,8 @@ bool Row::set_email(std::string _email)
 void Row::serialize(std::byte *destination)
 {
     memcpy(destination+ID_OFFSET, &(this->id), ID_SIZE);
-    memcpy(destination+USERNAME_OFFSET, &(this->username), USERNAME_SIZE);
-    memcpy(destination+EMAIL_OFFSET, &(this->email), EMAIL_SIZE);
+    strncpy(reinterpret_cast<char*>(destination) + USERNAME_OFFSET, static_cast<char*>(this->username), USERNAME_SIZE);
+    strncpy(reinterpret_cast<char*>(email) + EMAIL_OFFSET, static_cast<char*>(email), EMAIL_SIZE);
 }
 
 void Row::deserialize(std::byte* source)
