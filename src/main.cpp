@@ -9,7 +9,13 @@ void print_prompt()
 
 int main(int argc, char* argv[])
 {
-    std::string filename = "test.db";
+    if(argc < 2)
+    {
+        throw std::runtime_error("Must supply a database filename.\n");
+    }
+    std::string filename;
+    filename = argv[1];
+    
     InputBuffer* input_buffer = new InputBuffer();
     Table* table = new Table(filename);
     while (true)

@@ -12,7 +12,7 @@ class Table
 public:
     uint32_t num_rows;
     Pager* pager;
-    std::byte* operator [](uint32_t row_num);
+    char* operator [](uint32_t row_num);
     Table(std::string filename);
     ~Table();
 };

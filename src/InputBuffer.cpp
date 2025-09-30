@@ -52,7 +52,6 @@ MetaCommandResult InputBuffer::do_meta_command(Table* table)
 
 PrepareResult InputBuffer::prepare_statement(Statement *statement)
 {
-    // std::string temp = buffer->substr(0, 6);
     std::istringstream iss(*this->buffer);
     std::string keyword;
     iss >> keyword;

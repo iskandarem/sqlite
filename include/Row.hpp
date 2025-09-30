@@ -22,8 +22,8 @@ public:
     int get_id();
     char* get_username();
     char* get_email();
-    void serialize(std::byte* destination);
-    void deserialize(std::byte* destination);
+    void serialize(char* destination);
+    void deserialize(char* destination);
     static const uint32_t size_of_id();
     static const uint32_t size_of_username();
     static const uint32_t size_of_email();
