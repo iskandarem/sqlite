@@ -42,12 +42,10 @@ MetaCommandResult InputBuffer::do_meta_command(Table* table)
     if (*buffer == ".exit")
     {
         delete table;
-        exit(EXIT_SUCCESS);
+        return META_COMMAND_EXIT_SUCCESS;
     }
-    else
-    {
-        return META_COMMAND_UNRECOGNIZED_COMMAND;
-    }
+    return META_COMMAND_UNRECOGNIZED_COMMAND;
+    
 }
 
 PrepareResult InputBuffer::prepare_statement(Statement *statement)

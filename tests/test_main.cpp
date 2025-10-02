@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <InputBuffer.hpp>
 
-std::string filename = "test.db";
+std::string filename = "test_db_for_tests.db";
 
 TEST(DoMetaCommandTest, BasicAssertions)
 {
@@ -10,7 +10,25 @@ TEST(DoMetaCommandTest, BasicAssertions)
     input_buffer->set_buffer("exit");
     EXPECT_EQ(input_buffer->do_meta_command(table), META_COMMAND_UNRECOGNIZED_COMMAND);
 }
-
+// test .exit command
+TEST(FullTableExit, BasicAssertions)
+{
+    Table* table = new Table(filename);
+    InputBuffer* input_buffer = new InputBuffer();
+    Statement statement;
+    for(int i=0; i<1300; ++i)
+    {
+        std::string s = std::to_string(i);
+        input_buffer->set_buffer("insert " + s + " person" + s + " email.person" + s + "@gmail.com");
+        input_buffer->prepare_statement(&statement);
+        statement.execute_insert(table);
+    }
+    EXPECT_EQ(table->num_rows, MAX_TABLE_PAGES*ROWS_PER_PAGE);
+    input_buffer->set_buffer(".exit");
+    EXPECT_EQ(input_buffer->do_meta_command(table), META_COMMAND_EXIT_SUCCESS);
+    std::fstream f(filename, std::ios::out | std::ios::trunc);
+    f.close();
+}
 
 TEST(BasicInsertionTest, BasicAssertions)
 {
@@ -56,6 +74,8 @@ TEST(TooLongStringTest, BasicAssertions)
     Table* table = new Table(filename);
     EXPECT_EQ(input_buffer->prepare_statement(&statement), PREPARE_STRING_TOO_LONG);
 }
+
+
 
 //test enter type 
 TEST(EnerTypeTest, BasicAssertions)

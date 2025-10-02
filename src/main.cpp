@@ -27,11 +27,14 @@ int main(int argc, char* argv[])
         {
             switch (input_buffer->do_meta_command(table))
             {
-            case META_COMMAND_SUCCESS:
-                continue;
-            case META_COMMAND_UNRECOGNIZED_COMMAND:
-                std::cout << "Unrecognized command '" << *input_buffer->get_buffer() << "'" << std::endl;
-                continue;
+                case META_COMMAND_EXIT_SUCCESS:
+                    exit(EXIT_SUCCESS);
+                    break;    
+                case META_COMMAND_SUCCESS:
+                    continue;
+                case META_COMMAND_UNRECOGNIZED_COMMAND:
+                    std::cout << "Unrecognized command '" << *input_buffer->get_buffer() << "'" << std::endl;
+                    continue;
             }
         }
         Statement statement;
