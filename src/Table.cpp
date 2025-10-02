@@ -2,14 +2,23 @@
 #include <memory>
 #include <cstring>
 
-char* Table::operator[](uint32_t row_num)
-{
 
-    uint32_t page_num = row_num / ROWS_PER_PAGE;
-    char* page = pager->get_page(page_num);
-    uint32_t row_offset = row_num % ROWS_PER_PAGE;
-    uint32_t byte_offset = row_offset * ROW_SIZE;
-    return page + byte_offset;
+Cursor *Table::begin()
+{
+    Cursor* cursor = new Cursor();
+    cursor->table = this;
+    cursor->row_num = 0;
+    cursor->end_of_table = (this->num_rows == 0);
+    return cursor;
+}
+
+Cursor *Table::end()
+{
+    Cursor* cursor = new Cursor();
+    cursor->table = this;
+    cursor->row_num = this->num_rows;
+    cursor->end_of_table = true;
+    return cursor;
 }
 
 Table::Table(std::string filename)
@@ -51,5 +60,4 @@ Table::~Table()
         pager->set_page(nullptr, i);
     }
     delete pager;
-    
 }

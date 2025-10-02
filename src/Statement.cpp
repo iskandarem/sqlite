@@ -4,7 +4,10 @@
 ExecuteResult Statement::execute_insert(Table *table)
 {
     if(table->num_rows >= TABLE_MAX_ROWS) return EXECUTE_TABLE_FULL;
-    this->row_to_insert.serialize((*table)[table->num_rows]);
+
+    Cursor* cursor = table->end();
+    
+    this->row_to_insert.serialize(cursor->get_value());
     ++table->num_rows;
     return EXECUTE_SUCCESS;    
 }
@@ -12,10 +15,14 @@ ExecuteResult Statement::execute_insert(Table *table)
 ExecuteResult Statement::execute_select(Table *table)
 {
     Row row;
-    for (uint32_t i = 0; i < table->num_rows; ++i)
+
+    Cursor* cursor = table->begin();
+    
+    while(!cursor->end_of_table)
     {
-        row.deserialize((*table)[i]);
+        row.deserialize(cursor->get_value());
         std::cout << row << std::endl;
+        cursor->advance();
     }
     return EXECUTE_SUCCESS;
 }
