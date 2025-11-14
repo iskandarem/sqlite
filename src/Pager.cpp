@@ -38,22 +38,22 @@ Pager::Pager(const std::string filename)
     }
 }
 
-uint32_t Pager::get_file_length()
+size_t Pager::get_file_length()
 {
     return file_length;
 }
 
-char *Pager::get_page_raw(uint32_t page_num)
+char *Pager::get_page_raw(size_t page_num)
 {
     return pages[page_num];
 }
 
-void Pager::set_page(char *page, uint32_t page_num)
+    void Pager::set_page(char *page, size_t page_num)
 {
     pages[page_num] = page;
 }
 
-char *Pager::get_page(uint32_t page_num)
+char *Pager::get_page(size_t page_num)
 {
     if(page_num>=MAX_TABLE_PAGES)
     {
@@ -62,7 +62,7 @@ char *Pager::get_page(uint32_t page_num)
     if(!pages[page_num])
     {
         char* page = new char[PAGE_SIZE]();
-        uint32_t num_pages = file_length / PAGE_SIZE;
+        size_t num_pages = file_length / PAGE_SIZE;
         if (file_length % PAGE_SIZE) ++num_pages;
         // Only attempt to read from file if the requested page already exists on disk
         if (page_num < num_pages)
@@ -84,7 +84,7 @@ char *Pager::get_page(uint32_t page_num)
     return pages[page_num];
 }
 
-void Pager::pager_flush(uint32_t page_num)
+void Pager::pager_flush(size_t page_num)
 {
     if(!pages[page_num]) 
     {
@@ -110,7 +110,7 @@ void Pager::pager_flush(uint32_t page_num)
 
 Pager::~Pager()
 {
-    for(uint32_t i=0; i<MAX_TABLE_PAGES; ++i)
+    for(size_t i=0; i<MAX_TABLE_PAGES; ++i)
     {
         if(pages[i]) delete[] pages[i];
         pages[i] = nullptr;

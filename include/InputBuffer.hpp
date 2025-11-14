@@ -6,22 +6,19 @@
 class InputBuffer
 {
 private:
-    std::string* buffer; // Pointer to buffer holding input string
+    std::string buffer; // Pointer to buffer holding input string
 public:
-    InputBuffer();
 
-    std::string* get_buffer();
+    const std::string& get_buffer() const;
 
-    bool set_buffer(std::string input);
+    bool set_buffer(const std::string& input);
 
     bool read_input();
 
-    MetaCommandResult do_meta_command(Table* table);
+    MetaCommandResult do_meta_command();
 
-    PrepareResult prepare_statement(Statement* statement);
-
-    ~InputBuffer();   
+    PrepareResult prepare_statement(Statement& statement);
 };
 
 
-void trim_whitespace(std::string& str);
+std::string trim_whitespace(const std::string& input);

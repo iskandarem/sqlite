@@ -1,22 +1,22 @@
 #include "Statement.hpp"
 #include <iostream>
 
-ExecuteResult Statement::execute_insert(Table *table)
+ExecuteResult Statement::execute_insert(Table& table)
 {
-    if(table->num_rows >= TABLE_MAX_ROWS) return EXECUTE_TABLE_FULL;
+    if(table.num_rows >= TABLE_MAX_ROWS) return EXECUTE_TABLE_FULL;
 
-    Cursor* cursor = table->end();
+    Cursor* cursor = table.end();
     
     this->row_to_insert.serialize(cursor->get_value());
-    ++table->num_rows;
+    ++table.num_rows;
     return EXECUTE_SUCCESS;    
 }
 
-ExecuteResult Statement::execute_select(Table *table)
+ExecuteResult Statement::execute_select(Table& table) 
 {
     Row row;
 
-    Cursor* cursor = table->begin();
+    Cursor* cursor = table.begin();
     
     while(!cursor->end_of_table)
     {
@@ -27,7 +27,7 @@ ExecuteResult Statement::execute_select(Table *table)
     return EXECUTE_SUCCESS;
 }
 
-ExecuteResult Statement::execute_statement(Table *table)
+ExecuteResult Statement::execute_statement(Table& table)
 {
     switch (this->type)
     {

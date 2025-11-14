@@ -44,17 +44,17 @@ void Row::deserialize(char* source)
     memcpy(&(this->email), source + EMAIL_OFFSET, EMAIL_SIZE);
 }
 
-const uint32_t Row::size_of_id()
+const size_t Row::size_of_id()
 {
     return sizeof(Row::id);
 }
 
-const uint32_t Row::size_of_username()
+const size_t Row::size_of_username()
 {
     return sizeof(Row::username);
 }
 
-const uint32_t Row::size_of_email()
+const size_t Row::size_of_email()
 {
     return sizeof(Row::email);
 }

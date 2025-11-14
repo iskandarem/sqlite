@@ -2,10 +2,10 @@
 
 char *Cursor::get_value()
 {
-    uint32_t page_num = row_num / ROWS_PER_PAGE;
+    size_t page_num = row_num / ROWS_PER_PAGE;
     char* page = table->pager->get_page(page_num);
-    uint32_t row_offset = row_num % ROWS_PER_PAGE;
-    uint32_t byte_offset = row_offset * ROW_SIZE;
+    size_t row_offset = row_num % ROWS_PER_PAGE;
+    size_t byte_offset = row_offset * ROW_SIZE;
     return page + byte_offset;
 }
 
