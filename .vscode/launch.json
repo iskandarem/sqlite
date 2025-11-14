@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/sqlite",
-            "args": [],
+            "args": ["test.db"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",
             "environment": [],

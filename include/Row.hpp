@@ -2,6 +2,8 @@
 #include <cstdint>
 #include <cstddef>
 #include <iostream>
+#include <array>
+#include <string>
 
 #define COLUMN_USERNAME_SIZE 32
 #define COLUMN_EMAIL_SIZE 255
@@ -12,8 +14,8 @@ class Row
 {
 private:
     size_t id;
-    char username[COLUMN_USERNAME_SIZE+1];
-    char email[COLUMN_EMAIL_SIZE+1];
+    std::array<char, COLUMN_USERNAME_SIZE+1> username;
+    std::array<char, COLUMN_EMAIL_SIZE+1> email;
 public:
     Row() = default;
     bool set_id(int _id);

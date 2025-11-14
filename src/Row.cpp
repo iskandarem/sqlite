@@ -1,5 +1,6 @@
 #include "Row.hpp"
 #include <cstring>
+#include <string>
 
 bool Row::set_id(int _id)
 {
@@ -33,15 +34,15 @@ bool Row::set_email(std::string _email)
 void Row::serialize(char *destination)
 {
     memcpy(destination+ID_OFFSET, &(this->id), ID_SIZE);
-    strncpy(destination + USERNAME_OFFSET, this->username, USERNAME_SIZE);
-    strncpy(destination + EMAIL_OFFSET, this->email, EMAIL_SIZE);
+    strncpy(destination + USERNAME_OFFSET, this->username.data(), USERNAME_SIZE);
+    strncpy(destination + EMAIL_OFFSET, this->email.data(), EMAIL_SIZE);
 }
 
 void Row::deserialize(char* source)
 {
     memcpy(&(this->id), source + ID_OFFSET, ID_SIZE);
-    memcpy(&(this->username), source + USERNAME_OFFSET, USERNAME_SIZE);
-    memcpy(&(this->email), source + EMAIL_OFFSET, EMAIL_SIZE);
+    memcpy(this->username.data(), source + USERNAME_OFFSET, USERNAME_SIZE);
+    memcpy(this->email.data(), source + EMAIL_OFFSET, EMAIL_SIZE);
 }
 
 const size_t Row::size_of_id()
@@ -59,14 +60,32 @@ const size_t Row::size_of_email()
     return sizeof(Row::email);
 }
 
+int Row::get_id()
+{
+    return id;
+}
+
+char* Row::get_username()
+{
+    return this->username.data();
+}
+
+char* Row::get_email()
+{
+    return this->email.data();
+}
+
 std::ostream& operator<<(std::ostream& os, const Row& row)
 {
-    os << row.id << " " << row.username << " " << row.email;
+    os << row.id << " " << row.username.data() << " " << row.email.data();
     return os;
 }
 
 std::istream& operator>>(std::istream& is, Row& row)
 {
-    is >> row.id >> row.username >> row.email ;
+    std::string username_str, email_str;
+    is >> row.id >> username_str >> email_str;
+    row.set_username(username_str);
+    row.set_email(email_str);
     return is;
 }

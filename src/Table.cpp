@@ -50,6 +50,7 @@ Table::Table(std::string filename)
 
 Table::~Table()
 {
+    std::cout << "Closing table. Flushing pages to disk..." << std::endl;
     size_t num_of_full_pages = num_rows / ROWS_PER_PAGE;
     if(num_rows % ROWS_PER_PAGE > 0) ++num_of_full_pages;
     for(size_t i=0; i<num_of_full_pages; ++i)
